@@ -88,19 +88,16 @@ func Report(w http.ResponseWriter, r *http.Request) {
 	}
 
 	stUserInfoModel, err := comm.GetUserInfoByOpenId(strOpenId)
-	Printf("getUserInfoByOpenId succ, strOpenId:%s stUserInfoModel:%+v err:%+v\n", strOpenId, stUserInfoModel, err)
 	if err != nil {
-		rsp.Code = -1
+		rsp.Code = -333
 		rsp.ErrorMsg = err.Error()
 		return
 	}
-
 	if stUserInfoModel.UserID == 0 {
 		rsp.Code = -1
-		rsp.ErrorMsg = "user not exist"
+		rsp.ErrorMsg = "用户id不存在"
 		return
 	}
-
 
 	for _,v := range req.Events{
 		go func(stEvent Event, uid int64) {
@@ -108,7 +105,7 @@ func Report(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				rsp.Code = -33
 				rsp.ErrorMsg = err.Error()
-				Printf("DoReport err, strOpenId:%s stUserInfoModel:%+v err:%+v\n", uid, stUserInfoModel, err)
+				Printf("DoReport err, uid:%d err:%+v stEvent:%+v\n", uid, err, stEvent)
 				return
 			}
 		}(v, stUserInfoModel.UserID)
