@@ -74,7 +74,7 @@ func Report(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(req.Events) >= 50 {
+	if len(req.Events) == 0 || len(req.Events) >= 50 {
 		rsp.Code = -10003
 		rsp.ErrorMsg = err.Error()
 		return
