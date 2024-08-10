@@ -76,13 +76,13 @@ func Report(w http.ResponseWriter, r *http.Request) {
 
 	if len(req.Events) == 0 || len(req.Events) >= 50 {
 		rsp.Code = -10003
-		rsp.ErrorMsg = err.Error()
+		rsp.ErrorMsg = "参数错误"
 		return
 	}
 	for _,v := range req.Events{
-		if v.ActionID >= 103 || v.ActionID <= 103{
+		if v.ActionID >= 103 || v.ActionID <= 100{
 			rsp.Code = -10003
-			rsp.ErrorMsg = err.Error()
+			rsp.ErrorMsg = "ActionID 参数错误"
 			return
 		}
 	}
