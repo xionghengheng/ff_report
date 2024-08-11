@@ -79,8 +79,8 @@ func Report(w http.ResponseWriter, r *http.Request) {
 		rsp.ErrorMsg = "参数错误"
 		return
 	}
-	for _,v := range req.Events{
-		if v.ActionID >= 103 || v.ActionID <= 100{
+	for _, v := range req.Events {
+		if v.ActionID >= 103 || v.ActionID <= 100 {
 			rsp.Code = -10003
 			rsp.ErrorMsg = "ActionID 参数错误"
 			return
@@ -99,7 +99,7 @@ func Report(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _,v := range req.Events{
+	for _, v := range req.Events {
 		go func(stEvent Event, uid int64) {
 			err = dao.ImpReport.DoReport(tranReportItem2DbItem(stEvent, uid))
 			if err != nil {
@@ -113,7 +113,7 @@ func Report(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func tranReportItem2DbItem(event Event, uid int64)model.ReportModel{
+func tranReportItem2DbItem(event Event, uid int64) model.ReportModel {
 	return model.ReportModel{
 		UID:        uid,
 		ReportTime: time.Now().Unix(),
